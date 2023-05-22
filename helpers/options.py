@@ -1,34 +1,38 @@
-from rich.console import Console
-from rich.panel import Panel
-from rich.text import Text
-import logging
+from typing import List, Callable
+from writer import Writer
 
-# File imports
-from config.setup_config_and_connection import frame_title
-from helpers.colors import get_color
+class Option:
+    text: str
+    index: int
+    callout : Callable
 
-console = Console()
-logging.basicConfig(filename='czasoinator.log', encoding='utf-8', level=logging.DEBUG, format='[%(asctime)s] %('
-                                                                                              'levelname)s: %('
-                                                                                              'message)s')
+    def __init__(self, index: int, text: str):
+        self.text = text
+        self.index = index
+    
+    def __repr__(self):
+        return f"[{self.index}] {self.text}"
 
 
-def show_options():
-    """
-    Point where program start with user interaction.
+class MainMenu:
+    options: List[str]
+    color : str = "light_blue"
+    
+    def __init__(self):
+        self.options.append(Option(1, "Start timer on ceratin issue"))
+        self.options.append(Option(2, "Check today progress"))
+        self.options.append(Option(3, "Check yesterday progress"))
+        self.options.append(Option(4, "Add time to issue manually"))
+        self.options.append(Option(5, "Check issuess assigned to you"))
+        self.options.append(Option(6, "Stats"))
+        self.options.append(Option(7, "Exit"))
 
-    Returns:
+    def generate_list():
+        header = "\nChoose action to perform: \n"
+        return header + "\n".join(self.options)
 
-    """
+    def write_menu():
+        Writer.write_panel(self.generate_list(), color)
 
-    console.print(Panel(Text("\nWybierz co chcesz zrobić:\n"
-                             "\n1. Uruchom zliczanie czasu"
-                             "\n2. Sprawdź dzisiejsze postępy"
-                             "\n3. Sprawdź wczorajsze postępy"
-                             "\n4. Dorzuć ręcznie czas do zadania"
-                             "\n5. Sprawdź zadania przypisane do Ciebie"
-                             "\n6. Sprawdź swoje dni urlopowe"
-                             "\n7. Statystyki"
-                             "\n8. Wyjście\n", justify="center", style="white"), style=get_color("light_blue"),
-                        title=frame_title))
-    logging.info("Pokazano listę opcji do wyboru.")
+
+

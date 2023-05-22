@@ -1,8 +1,5 @@
-from rich.console import Console
-from rich.panel import Panel
-from rich.text import Text
 import re
-import logging
+import logger
 import redminelib
 
 # File imports
@@ -12,20 +9,9 @@ from helpers.get_today_or_yesterday import get_time
 from helpers.colors import get_color
 from helpers.error_handler import display_error
 
-logging.basicConfig(filename='czasoinator.log', encoding='utf-8', level=logging.DEBUG, format='[%(asctime)s] %('
-                                                                                              'levelname)s: %('
-                                                                                              'message)s')
-console = Console()
 
 
 def add_manually_to_redmine():
-    """
-    A function used to add manually to redmine hours worked.
-
-    Returns:
-
-    """
-
     current_time, _, today = get_time()
     issue_id = input("\nPodaj numer zadania > ")
 
@@ -69,18 +55,18 @@ def add_manually_to_redmine():
         except Exception as e:
             console.print(f"Wystąpił błąd przy dodawaniu czasu do redmine - {e}")
 
-        logging.info(
+        logger.info(
             f"Dodano manualnie przepracowany czas do redmine pod zadaniem #{issue_id} - {time_elapsed} godzin.")
         # Insert user work to database.
         cursor.execute("INSERT INTO BAZA_DANYCH (DATA, NUMER_ZADANIA, NAZWA_ZADANIA, SPEDZONY_CZAS, KOMENTARZ) VALUES "
                        "(?, ?, ?, ?, ?)", (current_time, issue_id, issue_name, float_time_elapsed, comment,))
-        logging.info(
+        logger.info(
             f"Umieszczono w bazie danych dodany manualnie przepracowany czas pod zadaniem "
             f"#{issue_id} - {float_time_elapsed} godzin.")
 
         # Apply changes and close connection to sqlite database.
         conn.commit()
-        logging.info("Zakommitowano zmiany w bazie danych.")
+        logger.info("Zakommitowano zmiany w bazie danych.")
 
         console.print("", Panel(Text(f"\nDodano!"
                                      f"\n\nSpędzony czas: {hours} godzin, {minutes} minut."
