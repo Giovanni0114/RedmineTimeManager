@@ -1,16 +1,28 @@
-from redminelib import Redmine
-from redminelib import exceptions
+from .redminer import Redminer
+from dataclasses import dataclass
+
 import sys
 
+redminer = None
 
-class Redminer(Redmine):
-    def __init__(self, addr: str, key: str, n: int = 0):
-        logger.info(f"Connecting to server {addr}...")
-        try:
-            self = Redmine(addr, key)
-        except exceptions.BaseRedmineError:
-            if n == 3:
-                print("App is unable to connect with Redmine server. Check your internet connection")
-                sys.exit(1)
-            print("Connection seems to be failed. Trying again")
-            self = Redminer(addr, key, n+1)
+class FloatTime:
+    value: float
+
+    def __repr__(self):
+        return f"{int(self.value)}:{(self.value * 60 % 60):02}"
+
+@dataclass
+class Issue:
+    id: int
+    name: str
+    time_total: FloatTime
+    
+    def add_time(self, delta: float):
+        self.time_total.value += delta
+
+    def commit(self):
+        ...
+
+def redmine_init(addr, key):
+    redminer = Redminer(addr, key)
+

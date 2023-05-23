@@ -1,7 +1,8 @@
 from .config import RTMSettings
 
+from writer import writer_init
 from interface import MainMenu
-from redminer import Redminer
+from redminer import redmine_init
 
 
 from helpers.get_today_or_yesterday import get_time
@@ -16,8 +17,10 @@ from helpers.greet_user import welcome
 def main():
     settings = RTMSettings()
     menu = MainMenu() 
-    redmine = Redminer(settings.ADDRESS, settings.API_KEY)
 
+    redmine_init(settings.ADDRESS, settings.API_KEY)
+    writer_init()
+    
     welcome()
 
     # Main loop of script. Here we have "info" variable, which store True/False about showing options to choose.

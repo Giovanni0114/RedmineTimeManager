@@ -1,6 +1,5 @@
 import re
 import logger
-import redminelib
 
 # File imports
 from config.setup_config_and_connection import redmine, frame_title
@@ -9,23 +8,9 @@ from helpers.get_today_or_yesterday import get_time
 from helpers.colors import get_color
 from helpers.error_handler import display_error
 
-
-
 def add_manually_to_redmine():
     current_time, _, today = get_time()
     issue_id = input("\nPodaj numer zadania > ")
-
-    # Get issue name
-    try:
-        issue_name = str(redmine.issue.get(issue_id))
-
-    except redminelib.exceptions.ForbiddenError:
-        display_error("403 - Brak dostępu do wybranego zadania!")
-        return
-
-    except redminelib.exceptions.ResourceNotFoundError:
-        display_error("404 - Wybrane zadanie nie istnieje!")
-        return
 
     console.print("",
                   Panel(Text(f"\nWybrano zadanie: {issue_name}\n", justify="center", style="white"),

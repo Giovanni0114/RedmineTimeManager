@@ -13,21 +13,7 @@ from helpers.convert_float import float_to_hhmm
 
 console = Console()
 
-logging.basicConfig(filename='czasoinator.log', encoding='utf-8', level=logging.DEBUG, format='[%(asctime)s] %('
-                                                                                              'levelname)s: %('
-                                                                                              'message)s')
-
-
 def show_work(day):
-    """
-    A feature that shows progress and time spent on all tasks on the given day.
-
-    Args:
-        day: The day from which the script should show the work. Possible values: Today or yesterday.
-
-    Returns:
-    """
-
     total_hours = 0
 
     # This variable store information about doing anything before daily.

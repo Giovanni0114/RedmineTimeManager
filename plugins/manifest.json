@@ -1,0 +1,45 @@
+[
+  {
+    "symbol": "1",
+    "description": "Start timer on ceratin issue",
+	"action": "src/null.py",
+    "name": "issue_timer"
+  },
+  {
+    "symbol": "2",
+    "description": "Check today progress",
+	"action": "src/null.py",
+    "name": "today_progress"
+  },
+  {
+    "symbol": "3",
+    "description": "Check yesterday progress",
+	"action": "src/null.py",
+    "name": "yesterday_progress"
+  },
+  {
+    "symbol": "4",
+    "description": "Add time to issue manually",
+	"action": "src/null.py",
+    "name": "add_time_manually"
+  },
+  {
+    "symbol": "5",
+    "description": "Check issuess assigned to you",
+	"action": "src/null.py",
+	"name": "assigned_to_you"
+  },
+  {
+    "symbol": "6",
+    "description": "Statistics",
+	"action": "src/null.py",
+    "name": "stats"
+  },
+  {
+    "symbol": "7",
+    "description": "Exit RedmineTimeManager",
+	"action": "src/null.py",
+    "name": "exit"
+  }
+]
+

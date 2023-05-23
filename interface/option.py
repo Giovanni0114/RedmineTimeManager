@@ -1,18 +1,17 @@
 from typing import Callable
+from plugins import Plugin, PluginFactory
 
 class Option:
-    text: str
-    index: int
-    action : Callable
+    plugin: Plugin
+        
+    def __init__(self, plugin: Plugin):
+        self.plugin = plugin
 
-    def __init__(self, index: int, text: str):
-        self.text = text
-        self.index = index
-    
-    def assign_action(self, action: Callable) -> None:
-        self.action = action
+    @property
+    def action(self):
+        return self.plugin.action
 
     def __repr__(self) -> str:
-        return f"[{self.index}] {self.text}"
+        return f"[{self.plugin.symbol}] {self.plugin.label}"
 
 
