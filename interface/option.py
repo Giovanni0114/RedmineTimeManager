@@ -1,5 +1,5 @@
 from typing import Callable
-from plugins import Plugin, PluginFactory
+from .plugins import Plugin
 
 class Option:
     plugin: Plugin

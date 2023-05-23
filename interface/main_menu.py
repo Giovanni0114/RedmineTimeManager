@@ -1,14 +1,19 @@
 from .option import Option
 from typing import Dict
 from writer import writer
-from plugins import PluginFactory
+from dataclasses import dataclass
+from .plugins import PluginFactory
 
-
+@dataclass
 class MainMenu:
     options: Dict[str, Option]
 
     def __init__(self):
+        self.options = dict()
+
         factory = PluginFactory()
+        print(factory.get_plugins())
+
         for plugin in factory.get_plugins():
             self.options[plugin.symbol] = Option(plugin)
 
