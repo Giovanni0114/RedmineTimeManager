@@ -1,9 +1,10 @@
 from loguru import logger
-from abc import ABC,  abstractmethod
+from contextlib import contextmanager
+from abc import ABC, abstractmethods
 import sqlite3
 import os
 
-class Database:
+class SqliteDatabase:
     conn : sqlite3.Connection
     cursor : sqlite3.Cursor
 
@@ -23,42 +24,21 @@ class Database:
     def create_structure(self):
         queries = [
             "PRAGMA foreign_keys = ON;",   
-            "CREATE TABLE IF NOT EXISTS Issues (id INTEGER, issueName TEXT);", 
-            "CREATE TABLE IF NOT EXISTS Records (id INTEGER PRIMARY KEY AUTOINCREMENT, timeSpend REAL, issueId INT, comment TEXT, FOREIGN KEY (issueId) REFERENCES Issues (id));", 
-            "CREATE TABLE IF NOT EXISTS Storage (id INTEGER PRIMARY KEY AUTOINCREMENT, recordId INT, data TIMESTAMP,FOREIGN KEY (recordId) REFERENCES Records (id))" 
+            "CREATE TABLE IF NOT EXISTS Issues "
+            "(id INTEGER, issueName TEXT);", 
+
+            "CREATE TABLE IF NOT EXISTS Records "
+            "(id INTEGER PRIMARY KEY AUTOINCREMENT, timeSpend REAL, issueId INT, comment TEXT, FOREIGN KEY (issueId) REFERENCES Issues (id));", 
+
+            "CREATE TABLE IF NOT EXISTS Storage "
+            "(id INTEGER PRIMARY KEY AUTOINCREMENT, recordId INT, date TIMESTAMP, FOREIGN KEY (recordId) REFERENCES Records (id))" 
         ]
 
-class DatabaseEntity(ABC):
-    @abstractmethod
-    def get_entity(self, id: int) -> DatabaseObject:
-        pass
-
-    @abstractmethod
-    def delete_entity(self, id: int) -> bool:
-        pass
-
-    @abstractmethod
-    def create_entity(self, values: dict[str, ...]) -> DatabaseObject:
-        pass
-
-    @abstractmethod
-    def update_entity(self, changes : dict):
-        pass
-    
-    @abstractmethod
-    def validate_values(self, values: dict[str, ...]) -> bool:
-        pass
-
-class DatabaseObject(ABC):
-    entity: DatabaseEntity
-
-    @abstractmethod
-    def __repr__(self):
-        pass
-
-
-
-
-
-
+@contextmanager
+def db_connection():
+    db = SqliteDatabase()
+    try:
+        yield db
+    finally:
+        db.close_db()
 

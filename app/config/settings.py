@@ -1,5 +1,4 @@
 from loguru import logger
-from helpers import ERROR
 from pydantic import BaseSettings, Field
 from datetime import datetime, time
 from configparser import ConfigParser

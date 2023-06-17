@@ -14,20 +14,10 @@ from config.setup_config_and_connection import redmine, frame_title
 from helpers.error_handler import display_error
 from helpers.exit_handler import exit_program
 
-logging.basicConfig(filename='czasoinator.log', encoding='utf-8', level=logging.DEBUG, format='[%(asctime)s] %('
-                                                                                              'levelname)s: %('
-                                                                                              'message)s')
 
 console = Console()
 
-
 def welcome():
-    """
-    Log into redmine and greet user. Also, here we have error handler, for auth, connection and permission errors.
-
-    Returns:
-
-    """
     console.rule(
         f"[{get_color('bold_orange')}]CZASOINATOR [{get_color('white')}]-"
         f" [{get_color('blue')}]Trwa ładowanie aplikacji...", )

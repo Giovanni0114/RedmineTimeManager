@@ -2,7 +2,7 @@ from .option import Option
 from typing import Dict
 from writer import writer
 from dataclasses import dataclass
-from .plugins import PluginFactory
+from ..plugins import PluginFactory
 
 @dataclass
 class MainMenu:

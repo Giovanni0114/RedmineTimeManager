@@ -17,7 +17,12 @@ class Plugin:
         sys.path.append(os.path.dirname(__file__) + "/src")
     
         self.action = __import__(module).action
-
+    def redis_connection(self):
+        global _connection
+        if not _connection:
+            _connection = Redis(**config)
+    
+        return _connection
 class PluginFactory:
     def __init__(self):
         self.manifest = self.get_manifest()
